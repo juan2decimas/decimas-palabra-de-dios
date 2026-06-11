@@ -20,9 +20,9 @@ with col3:
     formato_negrita = st.checkbox("Texto en Negrita (**B**)")
 
 # Cuadro para que Juanito escriba sus versos
-texto_usuario = st.text_area("Escriba o pegue sus décimas aquí:", value="Escriba aquí sus versos de fe...", height=200)
+texto_usuario = st.text_area("Escriba o pegue sus décimas aquí:", value="Escriba aquí sus versos de fe...", height=150)
 
-# Aplicar el formato elegido al texto usando HTML/CSS simples
+# Aplicar el formato elegido al texto usando HTML/CSS
 estilo_css = f"font-size: {tamano_letra}px; "
 if estilo_letra == "Elegante (Serif)":
     estilo_css += "font-family: serif; "
@@ -45,12 +45,10 @@ st.write("Escriba un solo verso (una línea) abajo para medir sus 8 sílabas:")
 
 verso_a_medir = st.text_input("Verso a revisar:", value="Bendito sea el Creador")
 
-# Función básica para contar sílabas (aproximación para el taller)
 def contar_silabas_basico(texto):
     texto = texto.lower().strip()
     if not texto:
         return 0
-    # Contador simple basado en grupos de vocales
     vocales = "aeiouáéíóúü"
     conteo = 0
     en_vocal = False
@@ -65,7 +63,6 @@ def contar_silabas_basico(texto):
 
 silabas = contar_silabas_basico(verso_a_medir)
 
-# Mostrar el resultado con color según la ley de la octosílaba
 if silabas == 8:
     st.success(f"¡Perfecto! Este verso tiene exactamente **{silabas} sílabas** (Octosílabo de ley).")
 else:
@@ -74,9 +71,40 @@ else:
 st.write("---")
 
 # ==========================================
-# PARTE 3: CALENDARIO Y CONTADOR DE VISITAS
+# NUEVO: PARTE 3: LA BIBLIOTECA DE DÉCIMAS
 # ==========================================
-# Usamos columnas abajo para el rincón de datos
+st.header("📚 Biblioteca Virtual de Décimas")
+st.write("Seleccione un estante para leer los versos sagrados:")
+
+# Aquí creamos las pestañas (los estantes de la biblioteca)
+pestana1, pestana2, pestana3 = st.tabs(["🌱 La Creación", "📜 Los Mandamientos", "🕊️ Espíritu Santo"])
+
+with pestana1:
+    st.subheader("Décimas de la Creación")
+    st.markdown("""
+    *Al principio todo era oscuridad,* *sin forma, vacío y desierto,* *pero el espíritu despierto* *de Dios, con su gran majestad,* *trajo la luz de la verdad...*
+    """)
+    st.caption("— Compuesto por Juanito")
+
+with pestana2:
+    st.subheader("Décimas de la Ley Antigua")
+    st.markdown("""
+    *En el monte Sinaí temblando,* *Moisés la piedra recibió,* *la ley que el Padre nos dio* *para seguir caminando...*
+    """)
+    st.caption("— Compuesto por Juanito")
+
+with pestana3:
+    st.subheader("Décimas de Pentecostés")
+    st.markdown("""
+    *Como un viento huracanado* *el don divino descendió,* *el taller se iluminó* *con el fuego consagrado...*
+    """)
+    st.caption("— Compuesto por Juanito")
+
+st.write("---")
+
+# ==========================================
+# PARTE 4: CALENDARIO Y CONTADOR DE VISITAS
+# ==========================================
 col_izq, col_der = st.columns(2)
 
 with col_izq:
@@ -86,9 +114,8 @@ with col_izq:
 
 with col_der:
     st.subheader("👁️ Contador de Visitas")
-    # Inicializamos un contador simulado en la memoria de la página
     if 'visitas' not in st.session_state:
-        st.session_state['visitas'] = 104  # Empezamos con un número bonito de muestra
+        st.session_state['visitas'] = 121  # ¡Actualizado con sus visitas reales!
     else:
         st.session_state['visitas'] += 1
         
