@@ -1,17 +1,15 @@
 import streamlit as st
 from datetime import datetime
 
-# Configuración de la página - Esto cambia el nombre en la pestaña del navegador
+# Configuración de la página
 st.set_page_config(page_title="EL TALLER DE DECIMAS DE CUECANTO", page_icon="📝", layout="centered")
 
 # ==========================================
-# PARTE 1: TITULO PRINCIPAL CON SU NUEVO NOMBRE
+# PARTE 1: TITULO PRINCIPAL Y FORMATO
 # ==========================================
-# ¡Aquí quedó el letrero oficial de entrada, maestro!
 st.title("📝 EL TALLER DE DECIMAS DE CUECANTO")
 st.subheader("Herramientas de Escritura")
 
-# Controles de formato
 col1, col2, col3 = st.columns(3)
 with col1:
     estilo_letra = st.selectbox("Estilo de letra", ["Normal", "Elegante (Serif)", "Moderna (Sans)"])
@@ -20,10 +18,8 @@ with col2:
 with col3:
     formato_negrita = st.checkbox("Texto en Negrita (**B**)")
 
-# Cuadro para que escriba sus versos
 texto_usuario = st.text_area("Escriba o pegue sus décimas aquí:", value="Escriba aquí sus versos de fe...", height=150)
 
-# Aplicar el formato elegido al texto usando HTML/CSS
 estilo_css = f"font-size: {tamano_letra}px; "
 if estilo_letra == "Elegante (Serif)":
     estilo_css += "font-family: serif; "
@@ -39,12 +35,17 @@ st.markdown(f'<p style="{estilo_css}">{texto_usuario.replace("\n", "<br>")}</p>'
 st.write("---")
 
 # ==========================================
-# PARTE 2: CONTADOR DE SÍLABAS Y RIMAS
+# REFORMADO - PARTE 2: EL REVISOR DE 10 LÍNEAS
 # ==========================================
-st.subheader("📐 Contador de Sílabas Métcases")
-st.write("Escriba un solo verso (una línea) abajo para medir sus 8 sílabas:")
+st.subheader("📐 Revisor Métrico de la Décima Completa")
+st.write("Pegue o escriba su décima de 10 líneas abajo. El sistema medirá cada renglón por separado:")
 
-verso_a_medir = st.text_input("Verso a revisar:", value="Bendito sea el Creador")
+# Cuadro grande para meter las 10 líneas juntas
+decima_a_medir = st.text_area(
+    "Escriba aquí sus 10 versos para medir:", 
+    value="Al principio todo era oscuridad,\nsin forma, vacío y desierto,\npero el espíritu despierto\nde Dios, con su gran majestad,\ntrajo la luz de la verdad.",
+    height=220
+)
 
 def contar_silabas_basico(texto):
     texto = texto.lower().strip()
@@ -62,59 +63,112 @@ def contar_silabas_basico(texto):
             en_vocal = False
     return conteo
 
-silabas = contar_silabas_basico(verso_a_medir)
+# Separamos el texto por líneas para revisarlas una a una
+lineas = decima_a_medir.split('\n')
 
-if silabas == 8:
-    st.success(f"¡Perfecto! Este verso tiene exactamente **{silabas} sílabas** (Octosílabo de ley).")
+st.markdown("### 📊 Reporte del Calce (Línea por Línea):")
+
+# Revisamos un máximo de 10 líneas para mantener el orden de la décima
+for i, linea in enumerate(lineas[:10]):
+    if linea.strip(): # Si la línea no está vacía
+        cant_silabas = contar_silabas_basico(linea)
+        if cant_silabas == 8:
+            st.markdown(f"✅ **Línea {i+1}:** `{linea}` — **{cant_silabas} sílabas** (¡De ley!)")
+        else:
+            st.markdown(f"⚠️ **Línea {i+1}:** `{linea}` — **{cant_silabas} sílabas** (Revisar calce)")
+
+if len(lineas) > 10:
+    st.caption("💡 *Nota: Una décima de ley tiene solo 10 líneas. Ha escrito más renglones de la cuenta.*")
 else:
-    st.info(f"Este verso tiene **{silabas} sílabas** detectadas. (Recuerde ajustar las sinalefas si es necesario).")
+    st.caption("💡 *Recuerde: El contador hace una medición matemática básica. Al cantar, considere las sinalefas (unión de vocales) para el octosílabo definitivo.*")
 
 st.write("---")
 
 # ==========================================
-# PARTE 3: LA BIBLIOTECA DE DÉCIMAS
+# PARTE 3: SECCIÓN DE ESTUDIO E HISTORIA
+# ==========================================
+st.header("🎓 Rincón del Estudio: El Origen de la Décima")
+
+with st.expander("📖 Pinche aquí para leer la historia y estructura de la décima"):
+    st.markdown("""
+    ### El Nacimiento de la Espinela
+    La décima que utilizamos hoy en día nació en **España en el año 1591**. Fue fijada por el poeta, músico y sacerdote **Vicente Espinel**. Por esta razón, a la décima de diez versos octosílabos se le conoce formalmente en todo el mundo hispanohablante como **Décima Espinela**.
+    
+    A través de los siglos, esta estructura viajó en los barcos y echó raíces profundas en el alma de América Latina, convirtiéndose en Chile en la llave maestra del **Canto a lo Poeta** (tanto a lo Divino como a lo Humano) y de nuestras queridas cuecas astutas.
+    
+    ### La Regla de Oro: La Estructura ABBAACCDDC
+    Para que una décima esté correctamente construida y tenga rima consonante perfecta, los 10 versos deben rimar siguiendo este plano exacto de carpintería:
+    
+    * **Verso 1 (A)** rima con el **Verso 4** y el **Verso 5**.
+    * **Verso 2 (B)** rima únicamente con el **Verso 3**.
+    * **Verso 6 (C)** rima con el **Verso 7** y el **Verso 10**.
+    * **Verso 8 (D)** rima únicamente con el **Verso 9**.
+    
+    *¡Cada línea debe tener exactamente 8 sílabas métricas para mantener la música y el galope del verso chileno!*
+    """)
+
+st.write("---")
+
+# ==========================================
+# PARTE 4: LA BIBLIOTECA DE DÉCIMAS (REVISADAS)
 # ==========================================
 st.header("📚 Biblioteca Virtual de Décimas")
 st.write("Seleccione un estante para leer los versos sagrados:")
 
-# Aquí creamos las pestañas (los estantes de la biblioteca)
 pestana1, pestana2, pestana3 = st.tabs(["🌱 La Creación", "📜 Los Mandamientos", "🕊️ Espíritu Santo"])
 
 with pestana1:
     st.subheader("Décimas de la Creación")
     st.markdown("""
-    *Al principio todo era oscuridad,*  
-    *sin forma, vacío y desierto,*  
-    *pero el espíritu despierto*  
-    *de Dios, con su gran majestad,*  
-    *trajo la luz de la verdad...*
+    Al principio todo era oscuridad, (A)  
+    sin forma, vacío y desierto, (B)  
+    pero el espíritu despierto (B)  
+    de Dios, con su gran majestad, (A)  
+    trajo la luz de la verdad. (A)  
+    Separó las aguas del cielo, (C)  
+    puso la semilla en el suelo, (C)  
+    creó las estrellas y el sol, (D)  
+    con su divino crisol (D)  
+    le dio la vida a este suelo. (C)
     """)
-    st.caption("— Compuesto por Cuecanto")
+    st.caption("— Compuesto por Juanito")
 
 with pestana2:
     st.subheader("Décimas de la Ley Antigua")
     st.markdown("""
-    *En el monte Sinaí temblando,*  
-    *Moisés la piedra recibió,*  
-    *la ley que el Padre nos dio*  
-    *para seguir caminando...*
+    En el monte Sinaí temblando, (A)  
+    Moisés la piedra recibió, (B)  
+    la ley que el Padre nos dio (B)  
+    para seguir caminando. (A)  
+    Su santa voz escuchando (A)  
+    el pueblo su rumbo fijó, (C)  
+    la alianza eterna selló (C)  
+    con un mensaje de amor, (D)  
+    siguiendo al buen Salvador (D)  
+    que por la senda mandó. (C)
     """)
-    st.caption("— Compuesto por Cuecanto")
+    st.caption("— Compuesto por Juanito")
 
 with pestana3:
     st.subheader("Décimas de Pentecostés")
     st.markdown("""
-    *Como un viento huracanado*  
-    *el don divino descendió,*  
-    *el taller se iluminó*  
-    *con el fuego consagrado...*
+    Como un viento huracanado (A)  
+    el don divino descendió, (B)  
+    the taller se iluminó (B)  
+    con el fuego consagrado. (A)  
+    El temor ha terminado, (A)  
+    hablan lenguas sin cesar, (C)  
+    la palabra hay que llevar (C)  
+    con valentía y con fe, (D)  
+    alza tu voz, ponte en pie, (D)  
+    vamos todos a cantar. (C)
     """)
-    st.caption("— Compuesto por Cuecanto")
+    st.caption("— Compuesto por Juanito")
 
 st.write("---")
 
 # ==========================================
-# PARTE 4: CALENDARIO Y CONTADOR DE VISITAS
+# PARTE 5: CALENDARIO Y CONTADOR DE VISITAS
 # ==========================================
 col_izq, col_der = st.columns(2)
 
@@ -126,7 +180,7 @@ with col_izq:
 with col_der:
     st.subheader("👁️ Contador de Visitas")
     if 'visitas' not in st.session_state:
-        st.session_state['visitas'] = 121  # Manteniendo sus visitas reales intactas
+        st.session_state['visitas'] = 121
     else:
         st.session_state['visitas'] += 1
         
