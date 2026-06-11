@@ -120,23 +120,23 @@ pestana1, pestana2, pestana3 = st.tabs(["🌱 La Creación", "📜 Los Mandamien
 with pestana1:
     st.subheader("Décimas de la Creación")
     st.markdown("""
-    Al principio todo era oscuridad, (A)  
-    sin forma, vacío y desierto, (B)  
-    pero el espíritu despierto (B)  
-    de Dios, con su gran majestad, (A)  
+    Al principio oscuridad, (A)  
+    sin forma, y desierto, (B)  
+    el espíritu despierto (B)  
+    de Dios, y su gran majestad, (A)  
     trajo la luz de la verdad. (A)  
     Separó las aguas del cielo, (C)  
-    puso la semilla en el suelo, (C)  
-    creó las estrellas y el sol, (D)  
-    con su divino crisol (D)  
-    le dio la vida a este suelo. (C)
+    las semillas en  suelo, (C)  
+    creó estrellas y el sol, (D)  
+    y con su divino crisol (D)  
+    le dio vida a mi suelo. (C)
     """)
-    st.caption("— Compuesto por Juanito")
+    st.caption("— Compuesto por Cuecanto")
 
 with pestana2:
     st.subheader("Décimas de la Ley Antigua")
     st.markdown("""
-    En el monte Sinaí temblando, (A)  
+    Y en el monte temblando, (A)  
     Moisés la piedra recibió, (B)  
     la ley que el Padre nos dio (B)  
     para seguir caminando. (A)  
@@ -147,23 +147,23 @@ with pestana2:
     siguiendo al buen Salvador (D)  
     que por la senda mandó. (C)
     """)
-    st.caption("— Compuesto por Juanito")
+    st.caption("— Compuesto por Cuecanto")
 
 with pestana3:
     st.subheader("Décimas de Pentecostés")
     st.markdown("""
-    Como un viento huracanado (A)  
+    Como viento huracanado (A)  
     el don divino descendió, (B)  
-    the taller se iluminó (B)  
+    el taller se iluminó (B)  
     con el fuego consagrado. (A)  
     El temor ha terminado, (A)  
-    hablan lenguas sin cesar, (C)  
+    hablando lenguas sin cesar, (C)  
     la palabra hay que llevar (C)  
     con valentía y con fe, (D)  
     alza tu voz, ponte en pie, (D)  
-    vamos todos a cantar. (C)
+    y vamos todos a cantar. (C)
     """)
-    st.caption("— Compuesto por Juanito")
+    st.caption("— Compuesto por Cuecanto")
 
 st.write("---")
 
