@@ -5,7 +5,7 @@ from datetime import datetime
 st.set_page_config(page_title="EL TALLER DE DECIMAS DE CUECANTO", page_icon="📝", layout="centered")
 
 # ==========================================
-# BARNIZ DE FONDO: PAPEL ANTIGUO / PERGAMINO
+# BARNIZ DE FONDO: MADERA DE ROBLE / PERGAMINO
 # ==========================================
 st.markdown(
     """
@@ -17,12 +17,21 @@ st.markdown(
         background-repeat: no-repeat;
         background-attachment: fixed;
     }
-    /* Cuadro sutil blanco translúcido de fondo para que las letras resalten impecable */
+    /* El contenedor principal que unifica todo el taller */
     .block-container {
-        background-color: rgba(255, 255, 255, 0.65);
-        padding: 3rem 2rem;
+        background-color: rgba(255, 255, 255, 0.7);
+        padding: 2.5rem 2rem;
         border-radius: 15px;
-        box-shadow: 0px 4px 20px rgba(0,0,0,0.1);
+        box-shadow: 0px 4px 20px rgba(0,0,0,0.15);
+    }
+    /* Caja integrada para el Guitarrón y su botón */
+    .contenedor-guitarron {
+        background-color: rgba(245, 222, 179, 0.4);
+        padding: 20px;
+        border-radius: 12px;
+        border: 1px solid #d2b48c;
+        text-align: center;
+        margin-bottom: 20px;
     }
     </style>
     """,
@@ -33,26 +42,31 @@ st.markdown(
 # PARTE 1: TITULO PRINCIPAL
 # ==========================================
 st.title("📝 EL TALLER DE DECIMAS DE CUECANTO")
+st.write("Bienvenido al mesón de la poesía popular y la fe.")
 
 # ==========================================
-# EL BOTÓN DEL GUITARRÓN CHILENO
+# SECCIÓN INTEGRADA: EL BLOQUE DEL GUITARRÓN
 # ==========================================
-st.write("---")
-st.subheader("🎸 El Guitarrón del Taller")
-st.write("Pinche la imagen del Guitarrón Chileno para afinar las 25 cuerdas de la tradición:")
+# Todo metido dentro de un solo conjunto visual integrado
+with st.container():
+    st.markdown("### 🎸 El Guitarrón del Taller")
+    
+    # Imagen del Guitarrón
+    url_imagen_guitarron = "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?q=80&w=600&auto=format&fit=crop"
+    st.image(url_imagen_guitarron, width=320)
+    
+    # El botón pegadito justo abajo de la imagen, como parte de ella
+    if st.button("🎵 CLAVIJERO DEL POETA: Pinche aquí para afinar el verso"):
+        st.markdown("""
+        <div style='background-color: rgba(255,255,255,0.9); padding: 15px; border-radius: 10px; border-left: 5px solid #8B4513; margin-top: 10px; text-align: left;'>
+            <h4 style='margin:0;'>✨ ¡Guitarrón Afinado en la Variable! ✨</h4>
+            <p style='margin:5px 0 0 0;'><i>"Suenen las veinticinco cuerdas con fuerza, de norte a sur, 
+            iluminando el libreto con la divina luz del Salvador."</i></p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    st.caption("Guitarrón de ley - 25 cuerdas para el Canto a lo Divino")
 
-url_imagen_guitarron = "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?q=80&w=600&auto=format&fit=crop"
-
-if st.button("🎵 CLAVIJERO DEL POETA: Pinche aquí para afinar el verso"):
-    st.markdown("""
-    <div style='background-color: rgba(255,255,255,0.9); padding: 15px; border-radius: 10px; border-left: 5px solid #8B4513;'>
-        <h4>✨ ¡Guitarrón Afinado en la Variable! ✨</h4>
-        <p><i>"Suenen las veinticinco cuerdas con fuerza, de norte a sur, 
-        iluminando el libreto con la divina luz del Salvador."</i></p>
-    </div>
-    """, unsafe_allow_html=True)
-
-st.image(url_imagen_guitarron, caption="Guitarrón de ley - 25 cuerdas para el Canto a lo Divino", width=350)
 st.write("---")
 
 # ==========================================
