@@ -5,7 +5,7 @@ from datetime import datetime
 st.set_page_config(page_title="EL TALLER DE DECIMAS DE CUECANTO", page_icon="📝", layout="centered")
 
 # ==========================================
-# BARNIZ DE FONDO: MADERA DE ROBLE / PERGAMINO
+# BARNIZ DE FONDO: PAPEL ANTIGUO / PERGAMINO
 # ==========================================
 st.markdown(
     """
