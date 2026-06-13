@@ -5,9 +5,59 @@ from datetime import datetime
 st.set_page_config(page_title="EL TALLER DE DECIMAS DE CUECANTO", page_icon="📝", layout="centered")
 
 # ==========================================
-# PARTE 1: TITULO PRINCIPAL Y FORMATO
+# BARNIZ DE FONDO: PAPEL ANTIGUO / PERGAMINO
+# ==========================================
+st.markdown(
+    """
+    <style>
+    .stApp {
+        background-image: url("https://images.unsplash.com/photo-1585314062340-f1a5a7c9328d?q=80&w=2070&auto=format&fit=crop");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    /* Cuadro sutil blanco translúcido de fondo para que las letras resalten impecable */
+    .block-container {
+        background-color: rgba(255, 255, 255, 0.65);
+        padding: 3rem 2rem;
+        border-radius: 15px;
+        box-shadow: 0px 4px 20px rgba(0,0,0,0.1);
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# ==========================================
+# PARTE 1: TITULO PRINCIPAL
 # ==========================================
 st.title("📝 EL TALLER DE DECIMAS DE CUECANTO")
+
+# ==========================================
+# EL BOTÓN DEL GUITARRÓN CHILENO
+# ==========================================
+st.write("---")
+st.subheader("🎸 El Guitarrón del Taller")
+st.write("Pinche la imagen del Guitarrón Chileno para afinar las 25 cuerdas de la tradición:")
+
+url_imagen_guitarron = "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?q=80&w=600&auto=format&fit=crop"
+
+if st.button("🎵 CLAVIJERO DEL POETA: Pinche aquí para afinar el verso"):
+    st.markdown("""
+    <div style='background-color: rgba(255,255,255,0.9); padding: 15px; border-radius: 10px; border-left: 5px solid #8B4513;'>
+        <h4>✨ ¡Guitarrón Afinado en la Variable! ✨</h4>
+        <p><i>"Suenen las veinticinco cuerdas con fuerza, de norte a sur, 
+        iluminando el libreto con la divina luz del Salvador."</i></p>
+    </div>
+    """, unsafe_allow_html=True)
+
+st.image(url_imagen_guitarron, caption="Guitarrón de ley - 25 cuerdas para el Canto a lo Divino", width=350)
+st.write("---")
+
+# ==========================================
+# PARTE 2: HERRAMIENTAS DE ESCRITURA Y FORMATO
+# ==========================================
 st.subheader("Herramientas de Escritura")
 
 col1, col2, col3 = st.columns(3)
@@ -35,12 +85,11 @@ st.markdown(f'<p style="{estilo_css}">{texto_usuario.replace("\n", "<br>")}</p>'
 st.write("---")
 
 # ==========================================
-# REFORMADO - PARTE 2: EL REVISOR DE 10 LÍNEAS
+# PARTE 3: REVISOR DE 10 LÍNEAS
 # ==========================================
 st.subheader("📐 Revisor Métrico de la Décima Completa")
 st.write("Pegue o escriba su décima de 10 líneas abajo. El sistema medirá cada renglón por separado:")
 
-# Cuadro grande para meter las 10 líneas juntas
 decima_a_medir = st.text_area(
     "Escriba aquí sus 10 versos para medir:", 
     value="Al principio todo era oscuridad,\nsin forma, vacío y desierto,\npero el espíritu despierto\nde Dios, con su gran majestad,\ntrajo la luz de la verdad.",
@@ -63,29 +112,22 @@ def contar_silabas_basico(texto):
             en_vocal = False
     return conteo
 
-# Separamos el texto por líneas para revisarlas una a una
 lineas = decima_a_medir.split('\n')
 
 st.markdown("### 📊 Reporte del Calce (Línea por Línea):")
 
-# Revisamos un máximo de 10 líneas para mantener el orden de la décima
 for i, linea in enumerate(lineas[:10]):
-    if linea.strip(): # Si la línea no está vacía
+    if linea.strip():
         cant_silabas = contar_silabas_basico(linea)
         if cant_silabas == 8:
             st.markdown(f"✅ **Línea {i+1}:** `{linea}` — **{cant_silabas} sílabas** (¡De ley!)")
         else:
             st.markdown(f"⚠️ **Línea {i+1}:** `{linea}` — **{cant_silabas} sílabas** (Revisar calce)")
 
-if len(lineas) > 10:
-    st.caption("💡 *Nota: Una décima de ley tiene solo 10 líneas. Ha escrito más renglones de la cuenta.*")
-else:
-    st.caption("💡 *Recuerde: El contador hace una medición matemática básica. Al cantar, considere las sinalefas (unión de vocales) para el octosílabo definitivo.*")
-
 st.write("---")
 
 # ==========================================
-# PARTE 3: SECCIÓN DE ESTUDIO E HISTORIA
+# PARTE 4: SECCIÓN DE ESTUDIO E HISTORIA
 # ==========================================
 st.header("🎓 Rincón del Estudio: El Origen de la Décima")
 
@@ -95,22 +137,12 @@ with st.expander("📖 Pinche aquí para leer la historia y estructura de la dé
     La décima que utilizamos hoy en día nació en **España en el año 1591**. Fue fijada por el poeta, músico y sacerdote **Vicente Espinel**. Por esta razón, a la décima de diez versos octosílabos se le conoce formalmente en todo el mundo hispanohablante como **Décima Espinela**.
     
     A través de los siglos, esta estructura viajó en los barcos y echó raíces profundas en el alma de América Latina, convirtiéndose en Chile en la llave maestra del **Canto a lo Poeta** (tanto a lo Divino como a lo Humano) y de nuestras queridas cuecas astutas.
-    
-    ### La Regla de Oro: La Estructura ABBAACCDDC
-    Para que una décima esté correctamente construida y tenga rima consonante perfecta, los 10 versos deben rimar siguiendo este plano exacto de carpintería:
-    
-    * **Verso 1 (A)** rima con el **Verso 4** y el **Verso 5**.
-    * **Verso 2 (B)** rima únicamente con el **Verso 3**.
-    * **Verso 6 (C)** rima con el **Verso 7** y el **Verso 10**.
-    * **Verso 8 (D)** rima únicamente con el **Verso 9**.
-    
-    *¡Cada línea debe tener exactamente 8 sílabas métricas para mantener la música y el galope del verso chileno!*
     """)
 
 st.write("---")
 
 # ==========================================
-# PARTE 4: LA BIBLIOTECA DE DÉCIMAS (REVISADAS)
+# PARTE 5: LA BIBLIOTECA DE DÉCIMAS
 # ==========================================
 st.header("📚 Biblioteca Virtual de Décimas")
 st.write("Seleccione un estante para leer los versos sagrados:")
@@ -120,23 +152,23 @@ pestana1, pestana2, pestana3 = st.tabs(["🌱 La Creación", "📜 Los Mandamien
 with pestana1:
     st.subheader("Décimas de la Creación")
     st.markdown("""
-    Al principio oscuridad, (A)  
-    sin forma, y desierto, (B)  
-    el espíritu despierto (B)  
-    de Dios, y su gran majestad, (A)  
+    Al principio todo era oscuridad, (A)  
+    sin forma, vacío y desierto, (B)  
+    pero el espíritu despierto (B)  
+    de Dios, con su gran majestad, (A)  
     trajo la luz de la verdad. (A)  
     Separó las aguas del cielo, (C)  
-    las semillas en  suelo, (C)  
-    creó estrellas y el sol, (D)  
-    y con su divino crisol (D)  
-    le dio vida a mi suelo. (C)
+    puso la semilla en el suelo, (C)  
+    creó las estrellas y el sol, (D)  
+    con su divino crisol (D)  
+    le dio la vida a este suelo. (C)
     """)
-    st.caption("— Compuesto por Cuecanto")
+    st.caption("— Compuesto por Juanito")
 
 with pestana2:
     st.subheader("Décimas de la Ley Antigua")
     st.markdown("""
-    Y en el monte temblando, (A)  
+    En el monte Sinaí temblando, (A)  
     Moisés la piedra recibió, (B)  
     la ley que el Padre nos dio (B)  
     para seguir caminando. (A)  
@@ -147,28 +179,28 @@ with pestana2:
     siguiendo al buen Salvador (D)  
     que por la senda mandó. (C)
     """)
-    st.caption("— Compuesto por Cuecanto")
+    st.caption("— Compuesto por Juanito")
 
 with pestana3:
     st.subheader("Décimas de Pentecostés")
     st.markdown("""
-    Como viento huracanado (A)  
+    Como un viento huracanado (A)  
     el don divino descendió, (B)  
     el taller se iluminó (B)  
     con el fuego consagrado. (A)  
     El temor ha terminado, (A)  
-    hablando lenguas sin cesar, (C)  
+    hablan lenguas sin cesar, (C)  
     la palabra hay que llevar (C)  
     con valentía y con fe, (D)  
     alza tu voz, ponte en pie, (D)  
-    y vamos todos a cantar. (C)
+    vamos todos a cantar. (C)
     """)
-    st.caption("— Compuesto por Cuecanto")
+    st.caption("— Compuesto por Juanito")
 
 st.write("---")
 
 # ==========================================
-# PARTE 5: CALENDARIO Y CONTADOR DE VISITAS
+# PARTE 6: CALENDARIO Y VISITAS
 # ==========================================
 col_izq, col_der = st.columns(2)
 
@@ -183,5 +215,4 @@ with col_der:
         st.session_state['visitas'] = 121
     else:
         st.session_state['visitas'] += 1
-        
     st.metric(label="Visitantes en el taller", value=f"{st.session_state['visitas']} personas")
