@@ -80,7 +80,7 @@ if 'tocar_musica' not in st.session_state:
 st.title("📝 EL TALLER DE DECIMAS DE CUECANTO")
 
 # ==========================================
-# EL BOTÓN DEL GUITARRÓN CHILENO INTEGRADO CON AUDIO REAL
+# EL BOTÓN DEL GUITARRÓN CHILENO CON AUDIO INVISIBLE DE YOUTUBE
 # ==========================================
 st.write("---")
 st.subheader("🎸 El Guitarrón del Taller")
@@ -91,22 +91,24 @@ url_imagen_guitarron = "https://images.unsplash.com/photo-1510915361894-db8b6010
 if st.button("🎵 CLAVIJERO DEL POETA: Pinche aquí para afinar el verso"):
     st.session_state['tocar_musica'] = True
 
-# Si el botón fue activado, se despliega el mensaje y el reproductor de la entonación
+# Si el botón fue activado, se despliega el mensaje y se inyecta el audio INVISIBLE
 if st.session_state['tocar_musica']:
     st.markdown("""
     <div style='background-color: rgba(255, 255, 255, 0.85); padding: 15px; border-radius: 10px; border-left: 5px solid #5c3a21; color: #2b1d0c;'>
         <h4>✨ ¡Guitarrón Afinado en la Variable! ✨</h4>
         <p><i>"Suenen las veinticinco cuerdas con fuerza, de norte a sur, 
         iluminando el libreto con la divina luz del Salvador."</i></p>
-        <p style='font-size: 13px; color: #654321; margin-top: 5px;'>🎶 Escuchando: Entonación tradicional del Zurdo Ortega (Anticueca Banda)</p>
+        <p style='font-size: 13px; color: #654321; margin-top: 5px;'>🎶 Sonando de fondo: Entonación tradicional del Zurdo Ortega (Anticueca Banda)</p>
     </div>
     """, unsafe_allow_html=True)
     
-    # URL de YouTube con el parámetro 'start=20' para ir directo a la entonación y 'autoplay=1'
-    url_youtube_melodia = "https://www.youtube.com/watch?v=9xr1KDOpReA&start=20"
-    
-    # Desplegamos el reproductor de Streamlit de forma compacta
-    st.video(url_youtube_melodia, format="video/mp4", start_time=20)
+    # TRUCO DE CARPINTERÍA: Código de inserción de YouTube totalmente oculto (width y height en 0, e iframe invisible)
+    # Usamos autoplay=1 y start=20 para que parta en la melodía directo
+    html_audio_invisible = """
+    <iframe width="0" height="0" src="https://www.youtube.com/embed/9xr1KDOpReA?autoplay=1&start=20" 
+    frameborder="0" allow="autoplay; encrypted-media" style="display:none;"></iframe>
+    """
+    st.markdown(html_audio_invisible, unsafe_allow_html=True)
 
 st.image(url_imagen_guitarron, caption="Guitarrón de ley - 25 cuerdas para el Canto a lo Divino", width=350)
 st.write("---")
@@ -148,7 +150,7 @@ st.write("Pegue o escriba su décima de 10 líneas abajo. El sistema medirá cad
 
 decima_a_medir = st.text_area(
     "Escriba aquí sus 10 versos para medir:", 
-    value="Al principio todo era oscuridad,\nsin forma, vacío and desierto,\npero el espíritu despierto\nde Dios, con su gran majestad,\ntrajo la luz de la verdad.",
+    value="Al principio todo era oscuridad,\nsin forma, vacío y desierto,\npero el espíritu despierto\nde Dios, con su gran majestad,\ntrajo la luz de la verdad.",
     height=220
 )
 
@@ -272,7 +274,7 @@ with col_izq:
     st.subheader("📅 Fecha de Hoy")
     meses_es = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
     ahora = datetime.now()
-    dia = ahora.day
+    dia = Security.datetime.now().day if 'Security' in globals() else ahora.day
     mes = meses_es[ahora.month - 1]
     anio = ahora.year
     st.markdown(f"<p style='color: #4a2c16; font-weight: bold;'>Hoy es: {dia} de {mes} del {anio}</p>", unsafe_allow_html=True)
