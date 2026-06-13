@@ -5,32 +5,38 @@ from datetime import datetime
 st.set_page_config(page_title="EL TALLER DE DECIMAS DE CUECANTO", page_icon="📝", layout="centered")
 
 # ==========================================
-# MAESTRÍA EN CSS: INTEGRACIÓN TOTAL VISUAL
+# MAESTRÍA EN CSS: Barniz de Madera Rústica
 # ==========================================
 st.markdown(
     """
     <style>
-    /* Fondo principal de pergamino antiguo */
+    /* Fondo principal: Textura de Madera de Nogal Rústica */
     .stApp {
-        background-image: url("https://images.unsplash.com/photo-1585314062340-f1a5a7c9328d?q=80&w=2070&auto=format&fit=crop");
+        background-image: url("https://images.unsplash.com/photo-1533038590840-1cde6e668a91?q=80&w=2070&auto=format&fit=crop");
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
         background-attachment: fixed;
     }
     
-    /* Contenedor central integrado, sin cortes duros */
+    /* Contenedor central integrado, translúcido sobre la madera */
     .block-container {
-        background-color: rgba(253, 246, 227, 0.5); /* Tono pergamino muy suave y transparente */
+        background-color: rgba(253, 246, 227, 0.6); /* Tono crema muy suave y transparente */
         padding: 2.5rem 2rem;
         border-radius: 20px;
+        box-shadow: 0px 4px 15px rgba(0,0,0,0.3);
     }
 
-    /* Fusión de botones para que parezcan tallados en la estructura */
+    /* Títulos y Subtítulos con color madera oscura */
+    h1, h2, h3, h4, h5, h6 {
+        color: #4a2c16 !important;
+    }
+
+    /* Fusión de botones: Efecto de tallado o pirograbado */
     div.stButton > button {
-        background-color: rgba(139, 69, 19, 0.15) !important;
-        color: #5c3a21 !important;
-        border: 2px solid #8b4513 !important;
+        background-color: rgba(101, 67, 33, 0.2) !important;
+        color: #4a2c16 !important;
+        border: 2px solid #5c3a21 !important;
         border-radius: 10px !important;
         padding: 10px 20px !important;
         font-weight: bold !important;
@@ -38,14 +44,14 @@ st.markdown(
     }
     
     div.stButton > button:hover {
-        background-color: rgba(139, 69, 19, 0.8) !important;
+        background-color: rgba(92, 58, 33, 0.9) !important;
         color: #ffffff !important;
         transform: scale(1.02);
     }
 
-    /* Integración de las pestañas de la biblioteca */
+    /* Integración de las pestañas de la biblioteca con tonos madera */
     .stTabs [data-baseweb="tab-list"] {
-        background-color: rgba(139, 69, 19, 0.1) !important;
+        background-color: rgba(101, 67, 33, 0.15) !important;
         border-radius: 10px;
         padding: 5px;
     }
@@ -56,7 +62,7 @@ st.markdown(
     }
 
     .stTabs [aria-selected="true"] {
-        background-color: rgba(139, 69, 19, 0.2) !important;
+        background-color: rgba(101, 67, 33, 0.3) !important;
         border-radius: 8px;
     }
     </style>
@@ -70,7 +76,7 @@ st.markdown(
 st.title("📝 EL TALLER DE DECIMAS DE CUECANTO")
 
 # ==========================================
-# EL BOTÓN DEL GUITARRÓN CHILENO INTEGRADO
+# EL BOTÓN DEL GUITARRÓN CHILENO INTEGRADO CON AUDIO
 # ==========================================
 st.write("---")
 st.subheader("🎸 El Guitarrón del Taller")
@@ -78,14 +84,25 @@ st.write("Pinche la imagen del Guitarrón Chileno para afinar las 25 cuerdas de 
 
 url_imagen_guitarron = "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?q=80&w=600&auto=format&fit=crop"
 
+# Enlace a un audio limpio de un rasgueo/acorde tradicional de cuerdas
+url_audio_guitarron = "https://assets.mixkit.co/active_storage/sfx/123/123-84.wav"
+
 if st.button("🎵 CLAVIJERO DEL POETA: Pinche aquí para afinar el verso"):
+    # Mensaje en pantalla
     st.markdown("""
-    <div style='background-color: rgba(255, 255, 255, 0.8); padding: 15px; border-radius: 10px; border-left: 5px solid #8B4513; color: #5c3a21;'>
+    <div style='background-color: rgba(255, 255, 255, 0.85); padding: 15px; border-radius: 10px; border-left: 5px solid #5c3a21; color: #2b1d0c;'>
         <h4>✨ ¡Guitarrón Afinado en la Variable! ✨</h4>
         <p><i>"Suenen las veinticinco cuerdas con fuerza, de norte a sur, 
         iluminando el libreto con la divina luz del Salvador."</i></p>
     </div>
     """, unsafe_allow_html=True)
+    
+    # Inyección de HTML invisible para forzar la reproducción automática del audio al hacer click
+    html_audio = f"""
+        <iframe src="{url_audio_guitarron}" allow="autoplay" style="display:none" id="iframeAudio"></iframe>
+        <audio autoplay><source src="{url_audio_guitarron}" type="audio/wav"></audio>
+    """
+    st.markdown(html_audio, unsafe_allow_html=True)
 
 st.image(url_imagen_guitarron, caption="Guitarrón de ley - 25 cuerdas para el Canto a lo Divino", width=350)
 st.write("---")
@@ -105,17 +122,17 @@ with col3:
 
 texto_usuario = st.text_area("Escriba o pegue sus décimas aquí:", value="Escriba aquí sus versos de fe...", height=150)
 
-estilo_css = f"font-size: {tamano_letra}px; color: #2b1d0c; "
+ststyle_css = f"font-size: {tamano_letra}px; color: #1a1a1a; "
 if estilo_letra == "Elegante (Serif)":
-    estilo_css += "font-family: serif; "
+    ststyle_css += "font-family: serif; "
 elif estilo_letra == "Moderna (Sans)":
-    estilo_css += "font-family: sans-serif; "
+    ststyle_css += "font-family: sans-serif; "
 
 if formato_negrita:
-    estilo_css += "font-weight: bold; "
+    ststyle_css += "font-weight: bold; "
 
 st.markdown("### 👁️ Vista Previa de su Verso:")
-st.markdown(f'<p style="{estilo_css}">{texto_usuario.replace("\n", "<br>")}</p>', unsafe_allow_html=True)
+st.markdown(f'<p style="{ststyle_css}">{texto_usuario.replace("\n", "<br>")}</p>', unsafe_allow_html=True)
 
 st.write("---")
 
@@ -157,7 +174,7 @@ for i, linea in enumerate(lineas[:10]):
         if cant_silabas == 8:
             st.markdown(f"✅ **Línea {i+1}:** `{linea}` — **{cant_silabas} sílabas**")
         else:
-            st.markdown(f"⚠️ **Línea {i+1}:** `{linea}` — **{cant_silabas} sílabas**")
+            st.markdown(f"<span style='color: #654321;'>⚠️ **Línea {i+1}:** `{linea}` — **{cant_silabas} sílabas**</span>", unsafe_allow_html=True)
 
 st.write("---")
 
@@ -171,7 +188,7 @@ with st.expander("📖 Pinche aquí para leer la historia y estructura de la dé
     ### El Nacimiento de la Espinela
     La décima que utilizamos hoy en día nació en **España en el año 1591**. Fue fijada por el poeta, músico y sacerdote **Vicente Espinel**. Por esta razón, a la décima de diez versos octosílabos se le conoce formalmente en todo el mundo hispanohablante como **Décima Espinela**.
     
-    A través de los siglos, esta estructura viajó en los barcos y echó raíces profundas en el alma de América Latina, convirtiéndose en Chile en la llave maestra del **Canto a lo Poeta** y de nuestras queridas cuecas astutas.
+    A través de los siglos, esta estructura viajó en los barcos y echó raíces profundas en el alma de América Latina, convirtiéndose en Chile en la llave maestra del **Canto a lo Poeta** (tanto a lo Divino como a lo Humano) y de nuestras queridas cuecas astutas.
     """)
 
 st.write("---")
@@ -184,58 +201,66 @@ st.write("Seleccione un estante para leer los versos sagrados:")
 
 pestana1, pestana2, pestana3 = st.tabs(["🌱 La Creación", "📜 Los Mandamientos", "🕊️ Espíritu Santo"])
 
+estilo_texto_biblioteca = "color: #2b1d0c; font-style: italic;"
+
 with pestana1:
     st.subheader("Décimas de la Creación")
-    st.markdown("""
-    Al principio todo era oscuridad, (A)  
-    sin forma, vacío y desierto, (B)  
-    pero el espíritu despierto (B)  
-    de Dios, con su gran majestad, (A)  
-    trajo la luz de la verdad. (A)  
-    Separó las aguas del cielo, (C)  
-    puso la semilla en el suelo, (C)  
-    creó las estrellas y el sol, (D)  
-    con su divino crisol (D)  
+    st.markdown(f"""
+    <p style="{estilo_texto_biblioteca}">
+    Al principio todo era oscuridad, (A)<br>
+    sin forma, vacío y desierto, (B)<br>
+    pero el espíritu despierto (B)<br>
+    de Dios, con su gran majestad, (A)<br>
+    trajo la luz de la verdad. (A)<br>
+    Separó las aguas del cielo, (C)<br>
+    puso la semilla en el suelo, (C)<br>
+    creó las estrellas y el sol, (D)<br>
+    con su divino crisol (D)<br>
     le dio la vida a este suelo. (C)
-    """)
+    </p>
+    """, unsafe_allow_html=True)
     st.caption("— Compuesto por Juanito")
 
 with pestana2:
     st.subheader("Décimas de la Ley Antigua")
-    st.markdown("""
-    En el monte Sinaí temblando, (A)  
-    Moisés la piedra recibió, (B)  
-    la ley que el Padre nos dio (B)  
-    para seguir caminando. (A)  
-    Su santa voz escuchando (A)  
-    el pueblo su rumbo fijó, (C)  
-    la alianza eterna selló (C)  
-    con un mensaje de amor, (D)  
-    siguiendo al buen Salvador (D)  
+    st.markdown(f"""
+    <p style="{estilo_texto_biblioteca}">
+    En el monte Sinaí temblando, (A)<br>
+    Moisés la piedra recibió, (B)<br>
+    la ley que el Padre nos dio (B)<br>
+    para seguir caminando. (A)<br>
+    Su santa voz escuchando (A)<br>
+    el pueblo su rumbo fijó, (C)<br>
+    la alianza eterna selló (C)<br>
+    con un mensaje de amor, (D)<br>
+    siguiendo al buen Salvador (D)<br>
     que por la senda mandó. (C)
-    """)
+    </p>
+    """, unsafe_allow_html=True)
     st.caption("— Compuesto por Juanito")
 
 with pestana3:
     st.subheader("Décimas de Pentecostés")
-    st.markdown("""
-    Como un viento huracanado (A)  
-    el don divino descendió, (B)  
-    el taller se iluminó (B)  
-    con el fuego consagrado. (A)  
-    El temor ha terminado, (A)  
-    hablan lenguas sin cesar, (C)  
-    la palabra hay que llevar (C)  
-    con valentía y con fe, (D)  
-    alza tu voz, ponte en pie, (D)  
+    st.markdown(f"""
+    <p style="{estilo_texto_biblioteca}">
+    Como un viento huracanado (A)<br>
+    el don divino descendió, (B)<br>
+    el taller se iluminó (B)<br>
+    con el fuego consagrado. (A)<br>
+    El temor ha terminado, (A)<br>
+    hablan lenguas sin cesar, (C)<br>
+    la palabra hay que llevar (C)<br>
+    con valentía y con fe, (D)<br>
+    alza tu voz, ponte en pie, (D)<br>
     vamos todos a cantar. (C)
-    """)
+    </p>
+    """, unsafe_allow_html=True)
     st.caption("— Compuesto por Juanito")
 
 st.write("---")
 
 # ==========================================
-# PARTE 6: CALENDARIO Y VISITAS (FORZADO EN ESPAÑOL)
+# PARTE 6: CALENDARIO Y VISITAS
 # ==========================================
 col_izq, col_der = st.columns(2)
 
@@ -246,7 +271,7 @@ with col_izq:
     dia = ahora.day
     mes = meses_es[ahora.month - 1]
     anio = ahora.year
-    st.write(f"Hoy es: **{dia} de {mes} del {anio}**")
+    st.markdown(f"<p style='color: #4a2c16; font-weight: bold;'>Hoy es: {dia} de {mes} del {anio}</p>", unsafe_allow_html=True)
 
 with col_der:
     st.subheader("👁️ Contador de Visitas")
