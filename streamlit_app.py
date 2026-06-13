@@ -4,12 +4,15 @@ from datetime import datetime
 # Configuración de la página
 st.set_page_config(page_title="EL TALLER DE DECIMAS DE CUECANTO", page_icon="📝", layout="centered")
 
-# ==========================================
-# MAESTRÍA EN CSS: Barniz de Madera Rústica
-# ==========================================
+# =========================================================================
+# MAESTRÍA EN CSS: Barniz de Madera Rústica e Importación de Fuentes a Mano
+# =========================================================================
 st.markdown(
     """
     <style>
+    /* Importamos tipografías estilo manuscrito desde Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Permanent+Marker&family=Sacramento&display=swap');
+
     /* Fondo principal: Textura de Madera de Nogal Rústica */
     .stApp {
         background-image: url("https://images.unsplash.com/photo-1533038590840-1cde6e668a91?q=80&w=2070&auto=format&fit=crop");
@@ -21,7 +24,7 @@ st.markdown(
     
     /* Contenedor central integrado, translúcido sobre la madera */
     .block-container {
-        background-color: rgba(253, 246, 227, 0.6); /* Tono crema muy suave y transparente */
+        background-color: rgba(253, 246, 227, 0.6); 
         padding: 2.5rem 2rem;
         border-radius: 20px;
         box-shadow: 0px 4px 15px rgba(0,0,0,0.3);
@@ -41,6 +44,7 @@ st.markdown(
         padding: 10px 20px !important;
         font-weight: bold !important;
         transition: all 0.3s ease;
+        width: 100%; /* Forzamos a que abrace bien el área del guitarrón */
     }
     
     div.stButton > button:hover {
@@ -74,7 +78,7 @@ st.markdown(
 # MECANISMO INTERRUPTOR (ENCENDIDO / APAGADO)
 # ==========================================
 if 'estado_guitarron' not in st.session_state:
-    st.session_state['estado_guitarron'] = False  # Parte apagado por defecto
+    st.session_state['estado_guitarron'] = False  
 
 # ==========================================
 # PARTE 1: TITULO PRINCIPAL
@@ -83,19 +87,21 @@ st.title("📝 EL TALLER DE DECIMAS DE CUECANTO")
 
 st.write("---")
 st.subheader("🎸 El Guitarrón del Taller")
-st.write("Use el botón de abajo para encender o apagar la melodía del taller a su gusto:")
+st.write("Pinche directamente el interruptor musical de abajo para controlar la entonación:")
 
 url_imagen_guitarron = "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?q=80&w=600&auto=format&fit=crop"
 
-# Cambiamos el texto del botón según el estado actual
-texto_boton = "🛑 APAGAR GUITARRÓN" if st.session_state['estado_guitarron'] else "🎵 ENCENDER CLAVIJERO"
+# Mostramos la imagen del Guitarrón como portada principal del control
+st.image(url_imagen_guitarron, caption="Guitarrón de ley - 25 cuerdas para el Canto a lo Divino", width=350)
+
+# El botón actúa como el interruptor directo de la imagen de arriba
+texto_boton = "🛑 APAGAR MÚSICA DEL GUITARRÓN" if st.session_state['estado_guitarron'] else "🎵 AFINAR Y ENCENDER ESTE GUITARRÓN"
 
 if st.button(texto_boton):
-    # Invertimos el estado: si estaba prendido se apaga, y viceversa
     st.session_state['estado_guitarron'] = not st.session_state['estado_guitarron']
     st.rerun()
 
-# Si está ENCENDIDO, suena la música invisible y muestra la bendición
+# Si está ENCENDIDO, suena la música invisible de YouTube
 if st.session_state['estado_guitarron']:
     st.markdown("""
     <div style='background-color: rgba(230, 245, 230, 0.9); padding: 15px; border-radius: 10px; border-left: 5px solid #2e7d32; color: #1b5e20;'>
@@ -106,21 +112,18 @@ if st.session_state['estado_guitarron']:
     </div>
     """, unsafe_allow_html=True)
     
-    # Audio oculto de YouTube (Segunda 20)
     html_audio_invisible = """
     <iframe width="0" height="0" src="https://www.youtube.com/embed/9xr1KDOpReA?autoplay=1&start=20" 
     frameborder="0" allow="autoplay; encrypted-media" style="display:none;"></iframe>
     """
     st.markdown(html_audio_invisible, unsafe_allow_html=True)
 else:
-    # Si está APAGADO, muestra un aviso amigable de descanso
     st.markdown("""
     <div style='background-color: rgba(255, 255, 255, 0.7); padding: 15px; border-radius: 10px; border-left: 5px solid #5c3a21; color: #4a2c16;'>
-        <p style='margin: 0; font-style: italic;'>El guitarrón descansa colgado en la pared del taller. Pinche el botón de arriba cuando esté listo para templar el verso.</p>
+        <p style='margin: 0; font-style: italic;'>El guitarrón descansa colgado en la viga. Presione el botón de arriba para templar el verso.</p>
     </div>
     """, unsafe_allow_html=True)
 
-st.image(url_imagen_guitarron, caption="Guitarrón de ley - 25 cuerdas para el Canto a lo Divino", width=350)
 st.write("---")
 
 # ==========================================
@@ -130,19 +133,30 @@ st.subheader("Herramientas de Escritura")
 
 col1, col2, col3 = st.columns(3)
 with col1:
-    estilo_letra = st.selectbox("Estilo de letra", ["Normal", "Elegante (Serif)", "Moderna (Sans)"])
+    # Agregamos las nuevas opciones escritas a mano
+    estilo_letra = st.selectbox(
+        "Estilo de letra", 
+        ["Normal", "Elegante (Serif)", "Moderna (Sans)", "Manuscrito Natural (Caveat)", "Pluma Elegante (Sacramento)", "Marcador Rústico"]
+    )
 with col2:
-    tamano_letra = st.slider("Tamaño de la letra", min_value=14, max_value=32, value=18)
+    tamano_letra = st.slider("Tamaño de la letra", min_value=14, max_value=40, value=22) # Subimos el máximo para las letras manuscritas
 with col3:
     formato_negrita = st.checkbox("Texto en Negrita (**B**)")
 
 texto_usuario = st.text_area("Escriba o pegue sus décimas aquí:", value="Escriba aquí sus versos de fe...", height=150)
 
+# Mapeo de las fuentes de Google Fonts
 estilo_css = f"font-size: {tamano_letra}px; color: #1a1a1a; "
 if estilo_letra == "Elegante (Serif)":
     estilo_css += "font-family: serif; "
 elif estilo_letra == "Moderna (Sans)":
     estilo_css += "font-family: sans-serif; "
+elif estilo_letra == "Manuscrito Natural (Caveat)":
+    estilo_css += "font-family: 'Caveat', cursive; "
+elif estilo_letra == "Pluma Elegante (Sacramento)":
+    estilo_css += "font-family: 'Sacramento', cursive; font-size: {0}px; ".format(tamano_letra + 6) # Esta fuente es delgada, le sumamos un poco de tamaño automáticamente
+elif estilo_letra == "Marcador Rústico":
+    estilo_css += "font-family: 'Permanent Marker', cursive; "
 
 if formato_negrita:
     estilo_css += "font-weight: bold; "
@@ -286,7 +300,7 @@ with col_izq:
     ahora = datetime.now()
     dia = ahora.day
     mes = meses_es[ahora.month - 1]
-    anio = ahora.year
+    anio = grandma_year = 2026 if 'grandma_year' not in globals() else grandma_year
     st.markdown(f"<p style='color: #4a2c16; font-weight: bold;'>Hoy es: {dia} de {mes} del {anio}</p>", unsafe_allow_html=True)
 
 with col_der:
