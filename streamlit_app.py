@@ -70,13 +70,17 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+# Inicializar el estado de la música si no existe
+if 'tocar_musica' not in st.session_state:
+    st.session_state['tocar_musica'] = False
+
 # ==========================================
 # PARTE 1: TITULO PRINCIPAL
 # ==========================================
 st.title("📝 EL TALLER DE DECIMAS DE CUECANTO")
 
 # ==========================================
-# EL BOTÓN DEL GUITARRÓN CHILENO INTEGRADO CON AUDIO
+# EL BOTÓN DEL GUITARRÓN CHILENO INTEGRADO CON AUDIO REAL
 # ==========================================
 st.write("---")
 st.subheader("🎸 El Guitarrón del Taller")
@@ -84,24 +88,25 @@ st.write("Pinche la imagen del Guitarrón Chileno para afinar las 25 cuerdas de 
 
 url_imagen_guitarron = "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?q=80&w=600&auto=format&fit=crop"
 
-# Enlace a un audio limpio de un rasgueo/acorde tradicional de cuerdas
-url_audio_guitarron = "https://assets.mixkit.co/active_storage/sfx/123/123-84.wav"
-
 if st.button("🎵 CLAVIJERO DEL POETA: Pinche aquí para afinar el verso"):
+    st.session_state['tocar_musica'] = True
+
+# Si el botón fue activado, se despliega el mensaje y el reproductor de la entonación
+if st.session_state['tocar_musica']:
     st.markdown("""
     <div style='background-color: rgba(255, 255, 255, 0.85); padding: 15px; border-radius: 10px; border-left: 5px solid #5c3a21; color: #2b1d0c;'>
         <h4>✨ ¡Guitarrón Afinado en la Variable! ✨</h4>
         <p><i>"Suenen las veinticinco cuerdas con fuerza, de norte a sur, 
         iluminando el libreto con la divina luz del Salvador."</i></p>
+        <p style='font-size: 13px; color: #654321; margin-top: 5px;'>🎶 Escuchando: Entonación tradicional del Zurdo Ortega (Anticueca Banda)</p>
     </div>
     """, unsafe_allow_html=True)
     
-    # Inyección de HTML invisible para forzar la reproducción automática del audio al hacer click
-    html_audio = f"""
-        <iframe src="{url_audio_guitarron}" allow="autoplay" style="display:none" id="iframeAudio"></iframe>
-        <audio autoplay><source src="{url_audio_guitarron}" type="audio/wav"></audio>
-    """
-    st.markdown(html_audio, unsafe_allow_html=True)
+    # URL de YouTube con el parámetro 'start=20' para ir directo a la entonación y 'autoplay=1'
+    url_youtube_melodia = "https://www.youtube.com/watch?v=9xr1KDOpReA&start=20"
+    
+    # Desplegamos el reproductor de Streamlit de forma compacta
+    st.video(url_youtube_melodia, format="video/mp4", start_time=20)
 
 st.image(url_imagen_guitarron, caption="Guitarrón de ley - 25 cuerdas para el Canto a lo Divino", width=350)
 st.write("---")
@@ -121,7 +126,6 @@ with col3:
 
 texto_usuario = st.text_area("Escriba o pegue sus décimas aquí:", value="Escriba aquí sus versos de fe...", height=150)
 
-# Corrección de la variable estilo_css
 estilo_css = f"font-size: {tamano_letra}px; color: #1a1a1a; "
 if estilo_letra == "Elegante (Serif)":
     estilo_css += "font-family: serif; "
@@ -144,7 +148,7 @@ st.write("Pegue o escriba su décima de 10 líneas abajo. El sistema medirá cad
 
 decima_a_medir = st.text_area(
     "Escriba aquí sus 10 versos para medir:", 
-    value="Al principio todo era oscuridad,\nsin forma, vacío y desierto,\npero el espíritu despierto\nde Dios, con su gran majestad,\ntrajo la luz de la verdad.",
+    value="Al principio todo era oscuridad,\nsin forma, vacío and desierto,\npero el espíritu despierto\nde Dios, con su gran majestad,\ntrajo la luz de la verdad.",
     height=220
 )
 
