@@ -70,45 +70,55 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Inicializar el estado de la música si no existe
-if 'tocar_musica' not in st.session_state:
-    st.session_state['tocar_musica'] = False
+# ==========================================
+# MECANISMO INTERRUPTOR (ENCENDIDO / APAGADO)
+# ==========================================
+if 'estado_guitarron' not in st.session_state:
+    st.session_state['estado_guitarron'] = False  # Parte apagado por defecto
 
 # ==========================================
 # PARTE 1: TITULO PRINCIPAL
 # ==========================================
 st.title("📝 EL TALLER DE DECIMAS DE CUECANTO")
 
-# ==========================================
-# EL BOTÓN DEL GUITARRÓN CHILENO CON AUDIO INVISIBLE DE YOUTUBE
-# ==========================================
 st.write("---")
 st.subheader("🎸 El Guitarrón del Taller")
-st.write("Pinche la imagen del Guitarrón Chileno para afinar las 25 cuerdas de la tradición:")
+st.write("Use el botón de abajo para encender o apagar la melodía del taller a su gusto:")
 
 url_imagen_guitarron = "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?q=80&w=600&auto=format&fit=crop"
 
-if st.button("🎵 CLAVIJERO DEL POETA: Pinche aquí para afinar el verso"):
-    st.session_state['tocar_musica'] = True
+# Cambiamos el texto del botón según el estado actual
+texto_boton = "🛑 APAGAR GUITARRÓN" if st.session_state['estado_guitarron'] else "🎵 ENCENDER CLAVIJERO"
 
-# Si el botón fue activado, se despliega el mensaje y se inyecta el audio INVISIBLE
-if st.session_state['tocar_musica']:
+if st.button(texto_boton):
+    # Invertimos el estado: si estaba prendido se apaga, y viceversa
+    st.session_state['estado_guitarron'] = not st.session_state['estado_guitarron']
+    st.rerun()
+
+# Si está ENCENDIDO, suena la música invisible y muestra la bendición
+if st.session_state['estado_guitarron']:
     st.markdown("""
-    <div style='background-color: rgba(255, 255, 255, 0.85); padding: 15px; border-radius: 10px; border-left: 5px solid #5c3a21; color: #2b1d0c;'>
-        <h4>✨ ¡Guitarrón Afinado en la Variable! ✨</h4>
+    <div style='background-color: rgba(230, 245, 230, 0.9); padding: 15px; border-radius: 10px; border-left: 5px solid #2e7d32; color: #1b5e20;'>
+        <h4>✨ ¡Guitarrón Sonando en la Variable! ✨</h4>
         <p><i>"Suenen las veinticinco cuerdas con fuerza, de norte a sur, 
         iluminando el libreto con la divina luz del Salvador."</i></p>
-        <p style='font-size: 13px; color: #654321; margin-top: 5px;'>🎶 Sonando de fondo: Entonación tradicional del Zurdo Ortega (Anticueca Banda)</p>
+        <p style='font-size: 13px; color: #2e7d32; margin-top: 5px;'>🎶 Escuchando de fondo: Entonación del Zurdo Ortega (Anticueca Banda)</p>
     </div>
     """, unsafe_allow_html=True)
     
-    # TRUCO DE CARPINTERÍA: Código de inserción de YouTube totalmente oculto (width y height en 0, e iframe invisible)
-    # Usamos autoplay=1 y start=20 para que parta en la melodía directo
+    # Audio oculto de YouTube (Segunda 20)
     html_audio_invisible = """
     <iframe width="0" height="0" src="https://www.youtube.com/embed/9xr1KDOpReA?autoplay=1&start=20" 
     frameborder="0" allow="autoplay; encrypted-media" style="display:none;"></iframe>
     """
     st.markdown(html_audio_invisible, unsafe_allow_html=True)
+else:
+    # Si está APAGADO, muestra un aviso amigable de descanso
+    st.markdown("""
+    <div style='background-color: rgba(255, 255, 255, 0.7); padding: 15px; border-radius: 10px; border-left: 5px solid #5c3a21; color: #4a2c16;'>
+        <p style='margin: 0; font-style: italic;'>El guitarrón descansa colgado en la pared del taller. Pinche el botón de arriba cuando esté listo para templar el verso.</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 st.image(url_imagen_guitarron, caption="Guitarrón de ley - 25 cuerdas para el Canto a lo Divino", width=350)
 st.write("---")
@@ -194,7 +204,7 @@ with st.expander("📖 Pinche aquí para leer la historia y estructura de la dé
     ### El Nacimiento de la Espinela
     La décima que utilizamos hoy en día nació en **España en el año 1591**. Fue fijada por el poeta, músico y sacerdote **Vicente Espinel**. Por esta razón, a la décima de diez versos octosílabos se le conoce formalmente en todo el mundo hispanohablante como **Décima Espinela**.
     
-    A través de los siglos, esta estructura viajó en los barcos y echó raíces profundas en el alma de América Latina, convirtiéndose en Chile en la llave maestra del **Canto a lo Poeta** (tanto a lo Divino como a lo Humano) y de nuestras queridas cuecas astutas.
+    A través de los siglos, esta estructura viajó en los barcos y echó raíces profundas naciendo en Chile el **Canto a lo Poeta** (tanto a lo Divino como a lo Humano) y nuestras queridas cuecas astutas.
     """)
 
 st.write("---")
@@ -274,7 +284,7 @@ with col_izq:
     st.subheader("📅 Fecha de Hoy")
     meses_es = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
     ahora = datetime.now()
-    dia = Security.datetime.now().day if 'Security' in globals() else ahora.day
+    dia = ahora.day
     mes = meses_es[ahora.month - 1]
     anio = ahora.year
     st.markdown(f"<p style='color: #4a2c16; font-weight: bold;'>Hoy es: {dia} de {mes} del {anio}</p>", unsafe_allow_html=True)
