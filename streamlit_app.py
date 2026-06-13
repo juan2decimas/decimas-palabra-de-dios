@@ -88,7 +88,6 @@ url_imagen_guitarron = "https://images.unsplash.com/photo-1510915361894-db8b6010
 url_audio_guitarron = "https://assets.mixkit.co/active_storage/sfx/123/123-84.wav"
 
 if st.button("🎵 CLAVIJERO DEL POETA: Pinche aquí para afinar el verso"):
-    # Mensaje en pantalla
     st.markdown("""
     <div style='background-color: rgba(255, 255, 255, 0.85); padding: 15px; border-radius: 10px; border-left: 5px solid #5c3a21; color: #2b1d0c;'>
         <h4>✨ ¡Guitarrón Afinado en la Variable! ✨</h4>
@@ -122,17 +121,18 @@ with col3:
 
 texto_usuario = st.text_area("Escriba o pegue sus décimas aquí:", value="Escriba aquí sus versos de fe...", height=150)
 
-ststyle_css = f"font-size: {tamano_letra}px; color: #1a1a1a; "
+# Corrección de la variable estilo_css
+estilo_css = f"font-size: {tamano_letra}px; color: #1a1a1a; "
 if estilo_letra == "Elegante (Serif)":
-    ststyle_css += "font-family: serif; "
+    estilo_css += "font-family: serif; "
 elif estilo_letra == "Moderna (Sans)":
-    ststyle_css += "font-family: sans-serif; "
+    estilo_css += "font-family: sans-serif; "
 
 if formato_negrita:
-    ststyle_css += "font-weight: bold; "
+    estilo_css += "font-weight: bold; "
 
 st.markdown("### 👁️ Vista Previa de su Verso:")
-st.markdown(f'<p style="{ststyle_css}">{texto_usuario.replace("\n", "<br>")}</p>', unsafe_allow_html=True)
+st.markdown(f'<p style="{estilo_css}">{texto_usuario.replace("\n", "<br>")}</p>', unsafe_allow_html=True)
 
 st.write("---")
 
